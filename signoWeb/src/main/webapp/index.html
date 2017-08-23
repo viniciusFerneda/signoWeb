@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>Signos</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+	<body data-ng-app="SignoApp">
+		<div data-ng-controller="PessoaController as controller">
+			<h1>SIGNO APP</h1>
+			
+			<div style="border: 1px solid black;" data-ng-show="controller.pessoa">
+                <label for="pessoaCod">Código: </label>
+                <input type="number" 
+                       id="pessoaCod" 
+                       data-ng-model="controller.pessoa.codigo"
+                       disabled><br>
+
+                <label for="assunto">Nome: </label>
+                <input type="text" id="nomePessoa" data-ng-model="controller.pessoa.nome"><br>
+                
+                <label for="assunto">Data de Nascimento: </label>
+                <input type="text" id="dtNascimentoPessoa" data-ng-model="controller.pessoa.dtNascimentoStr"><br>
+
+
+                <button type="button" data-ng-click="controller.salvar()">Salvar</button>
+                <button type="button" data-ng-click="controller.pessoa = undefined">Cancelar</button>
+            </div>
+            
+            <div style="border: 1px solid black;"
+                 data-ng-show="!controller.pessoa">
+                <button type="button" data-ng-click="controller.novo()">Novo pessoa</button><br>
+                <br>
+                <table border="1">
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Data de Nascimento</th>
+                        <th>Signo</th>
+                        <th>Opções</th>
+                    </tr>
+                    <tr data-ng-repeat="pessoa in controller.pessoas">
+                        <td>{{pessoa.codigo}}</td>
+                        <td>{{pessoa.nome}}</td>
+                        <td>{{pessoa.dtNascimento}}</td>
+                        <td>{{pessoa.signo.nome}}</td>
+                        <td>
+                            <button type="button" data-ng-click="controller.alterar(pessoa)">Alterar</button>
+                            <button type="button" data-ng-click="controller.deletar(pessoa)">Excluir</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+		</div>
+		
+		
+		<script src="resources/angular.js"></script>
+		<script src="resources/pessoa.js"></script>
+	</body>
+</html>
