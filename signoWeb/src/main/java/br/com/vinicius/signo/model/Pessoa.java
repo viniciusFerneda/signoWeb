@@ -2,6 +2,9 @@ package br.com.vinicius.signo.model;
 
 import java.util.Date;
 
+import br.com.vinicius.signo.dto.PessoaDTO;
+import br.com.vinicius.signo.utils.DateUtils;
+
 public class Pessoa {
 
 	private Integer codigo;
@@ -55,6 +58,12 @@ public class Pessoa {
 
 	public void setSigno(Signo signo) {
 		this.signo = signo;
+	}
+	
+	public PessoaDTO toDTO() {
+		return new PessoaDTO(this.getCodigo(), this.getNome(),
+				DateUtils.formatData(this.getDtNascimento(), DateUtils.PATTERN_DATA_PADRAO),
+				this.getSigno().getNome());
 	}
 
 }

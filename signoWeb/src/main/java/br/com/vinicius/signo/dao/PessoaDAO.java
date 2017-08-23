@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.vinicius.signo.dto.PessoaDTO;
 import br.com.vinicius.signo.model.Pessoa;
 import br.com.vinicius.signo.model.Signo;
 
@@ -49,8 +50,8 @@ public class PessoaDAO {
 		return statement.executeUpdate() > 0;
 	}
 
-	public List<Pessoa> lista() throws SQLException {
-		List<Pessoa> lPessoas = new ArrayList<>();
+	public List<PessoaDTO> lista() throws SQLException {
+		List<PessoaDTO> lPessoas = new ArrayList<>();
 
 		String sql = "SELECT PES.CODIGO, PES.NOME, PES.DT_NASCIMENTO, ";
 		sql += "SIG.CODIGO, SIG.NOME, SIG.DIA_INICIAL, SIG.DIA_FINAL, SIG.MES_INICIAL, SIG.MES_FINAL ";
@@ -69,8 +70,7 @@ public class PessoaDAO {
 					int diaFinal = rs.getInt(7);
 					int mesInicial = rs.getInt(8);
 					int mesFinal = rs.getInt(9);
-					Pessoa pessoa = new Pessoa(codigo, nome, dtNascimento, new Signo(codigoSigno, nomeSigno, diaInicial, diaFinal, mesInicial, mesFinal));
-					lPessoas.add(pessoa);
+					lPessoas.add(new Pessoa(codigo, nome, dtNascimento, new Signo(codigoSigno, nomeSigno, diaInicial, diaFinal, mesInicial, mesFinal)).toDTO());
 				}
 			}
 		}
