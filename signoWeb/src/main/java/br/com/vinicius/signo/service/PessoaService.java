@@ -19,22 +19,27 @@ public class PessoaService {
 	
 	public void inserir(Pessoa pessoa) throws SQLException{
 		try (Connection con = new ConnectionPoolOracle().getConnection()) {
-			List<Signo> lSignos = new SignoService().listarSignos();
-			for (Signo signo : lSignos) {
-				LocalDate dtNascimento = pessoa.getDtNascimento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-				if((dtNascimento.getMonthValue() == signo.getMesInicial() && dtNascimento.getDayOfMonth() >= signo.getDiaInicial())
-						|| (dtNascimento.getMonthValue() == signo.getMesFinal() && dtNascimento.getDayOfMonth() <= signo.getDiaFinal())){
-					pessoa.setSigno(signo);
-					break;
-				}
-			}
+			definirSignoPessoa(pessoa);
 			new PessoaDAO(con).inserir(pessoa);
 		}
 	}
+
+	private void definirSignoPessoa(Pessoa pessoa) throws SQLException {
+		List<Signo> lSignos = new SignoService().listarSignos();
+		for (Signo signo : lSignos) {
+			LocalDate dtNascimento = pessoa.getDtNascimento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			if((dtNascimento.getMonthValue() == signo.getMesInicial() && dtNascimento.getDayOfMonth() >= signo.getDiaInicial())
+					|| (dtNascimento.getMonthValue() == signo.getMesFinal() && dtNascimento.getDayOfMonth() <= signo.getDiaFinal())){
+				pessoa.setSigno(signo);
+				break;
+			}
+		}
+	}
 	
-	public void alterar(Integer codigo, String nome) throws SQLException{
+	public void alterar(Pessoa pessoa) throws SQLException{
 		try (Connection con = new ConnectionPoolOracle().getConnection()) {
-			new PessoaDAO(con).alterar(codigo, nome);
+			definirSignoPessoa(pessoa);
+			new PessoaDAO(con).alterar(pessoa);
 		}
 	}
 	

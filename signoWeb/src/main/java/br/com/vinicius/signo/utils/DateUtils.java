@@ -6,7 +6,7 @@ import java.util.Date;
 
 public final class DateUtils {
 
-	public static final String PATTERN_DATA_PADRAO = "dd/mm/yyyy";
+	public static final String PATTERN_DATA_PADRAO = "dd/MM/yyyy";
 
 	private DateUtils() {
 		throw new UnsupportedOperationException();

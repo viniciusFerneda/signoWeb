@@ -67,7 +67,7 @@ public class PessoaController {
 	public Response update(PessoaDTO pessoa) {
 		PessoaService pessoaService = new PessoaService();
 		try {
-			pessoaService.alterar(pessoa.getCodigo(), pessoa.getNome());
+			pessoaService.alterar(pessoa.toPessoa());
 			return Response.status(Response.Status.OK).build();
 		} catch (SQLException e) {
 			e.printStackTrace();

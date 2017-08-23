@@ -31,12 +31,14 @@ public class PessoaDAO {
 		return statement.executeUpdate() > 0;
 	}
 
-	public boolean alterar(Integer codigo, String nome) throws SQLException {
-		String sql = "UPDATE PESSOA SET NOME = ? WHERE CODIGO = ?";
+	public boolean alterar(Pessoa pessoa) throws SQLException {
+		String sql = "UPDATE PESSOA SET NOME = ?, DT_NASCIMENTO = ?, CODIGO_SIGNO = ? WHERE CODIGO = ?";
 
 		PreparedStatement statement = conn.prepareStatement(sql);
-		statement.setString(1, nome);
-		statement.setInt(2, codigo);
+		statement.setString(1, pessoa.getNome());
+		statement.setDate(2, new Date(pessoa.getDtNascimento().getTime()));
+		statement.setInt(3, pessoa.getSigno().getCodigo());
+		statement.setInt(4, pessoa.getCodigo());
 
 		return statement.executeUpdate() > 0;
 	}
