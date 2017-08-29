@@ -50,7 +50,7 @@ public class PessoaController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/")
-	public Response create(PessoaDTO pessoa) {
+	public Response inserir(PessoaDTO pessoa) {
 		PessoaService pessoaService = new PessoaService();
 		try {
 			pessoaService.inserir(pessoa.toPessoa());
@@ -60,7 +60,7 @@ public class PessoaController {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-
+	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/")
